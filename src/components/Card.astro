@@ -1,0 +1,13 @@
+---
+import { Picture } from 'astro:assets';
+const {...film} = Astro.props;
+
+
+---
+
+<article>
+<a href={film.Nom}>
+    <!-- <Picture pictureAttributes={{ class: "block rounded-t-lg overflow-hidden" }} inferSize={true} src={film.image} alt="" /> -->
+</a>
+<li>{film.bio}</li>
+</article>

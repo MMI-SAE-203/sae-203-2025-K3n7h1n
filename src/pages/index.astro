@@ -1,11 +1,188 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro"
 ---
-
 <Layout>
-	
+<!-- HERO / SECTION -->
+<section class="bg-[#77B5FE] text-[#FFD700] py-12">
+	<div class="container mx-auto px-4 flex flex-col items-center text-center space-y-6">
+	  <h1 class="text-3xl lg:text-5xl font-extrabold">Festival CinéMatsuri</h1>
+	  <p class="text-lg lg:text-xl font-medium">
+		Le festival incontournable pour tous les fans d'anime et de manga !
+	  </p>
+  
+	  <!-- Chrono décoratif statique -->
+	  <div class="bg-white rounded-md p-4 text-[#77B5FE] inline-block">
+		<div class="flex space-x-4 justify-center">
+		  <div class="flex flex-col items-center">
+			<span class="text-4xl font-bold">12</span>
+			<span class="text-sm">Jours</span>
+		  </div>
+		  <div class="flex flex-col items-center">
+			<span class="text-4xl font-bold">05</span>
+			<span class="text-sm">Heures</span>
+		  </div>
+		  <div class="flex flex-col items-center">
+			<span class="text-4xl font-bold">30</span>
+			<span class="text-sm">Minutes</span>
+		  </div>
+		  <div class="flex flex-col items-center">
+			<span class="text-4xl font-bold">10</span>
+			<span class="text-sm">Secondes</span>
+		  </div>
+		</div>
+	  </div>
+  
+	  <a 
+		href="#billetterie" 
+		class="bg-[#FF69B4] text-white px-6 py-3 rounded-md shadow-md hover:bg-pink-500 transition-colors font-semibold"
+	  >
+		Réserver ma place
+	  </a>
+	</div>
+  </section>
+  
+  <!-- LE FESTIVAL -->
+  <section id="festival" class="py-12 bg-white text-[#333]">
+	<div class="container mx-auto px-4">
+	  <h2 class="text-2xl lg:text-4xl font-bold text-center mb-8">Le Festival</h2>
+	  <div class="flex flex-col lg:flex-row items-center lg:space-x-8">
+		<div class="lg:w-1/2 mb-6 lg:mb-0">
+		  <img 
+			src="/index1.webp" 
+			alt="Le Festival" 
+			class="rounded-md w-full"
+		  />
+		</div>
+		<div class="lg:w-1/2 space-y-4">
+		  <p>
+			Découvrez l’histoire et les coulisses du Festival CinéMatsuri : une aventure qui
+			réunit chaque année les plus grands fans d’animation japonaise.
+		  </p>
+		  <p>
+			Au programme : projections exclusives, rencontres avec des professionnels du milieu,
+			ateliers et bien plus encore.
+		  </p>
+		</div>
+	  </div>
+	</div>
+  </section>
+  
+  <!-- PROGRAMME -->
+  <section id="programme" class="py-12 bg-[#77B5FE] text-[#FFD700]">
+	<div class="container mx-auto px-4">
+	  <h2 class="text-2xl lg:text-4xl font-bold text-center mb-8">Programme</h2>
+	  <div class="flex flex-col lg:flex-row items-center lg:space-x-8">
+		<div class="lg:w-1/2 mb-6 lg:mb-0 order-2 lg:order-1">
+		  <div class="space-y-4">
+			<p>
+			  Découvrez un planning complet : projections, conférences, ateliers cosplay,
+			  concours de karaoké, et bien plus encore.
+			</p>
+			<p>
+			  Restez à l’affût des mises à jour pour ne rien manquer des surprises que nous
+			  vous réservons !
+			</p>
+		  </div>
+		</div>
+		<div class="lg:w-1/2 order-1 lg:order-2">
+		  <img 
+			src="/index2.webp" 
+			alt="Programme" 
+			class="rounded-md w-full"
+		  />
+		</div>
+	  </div>
+	</div>
+  </section>
+  
+  <!-- BANDES-ANNONCES -->
+  <section id="bandes-annonces" class="py-12 bg-white text-[#333]">
+	<div class="container mx-auto px-4">
+	  <h2 class="text-2xl lg:text-4xl font-bold text-center mb-8">Bandes-annonces</h2>
+	  <div class="flex flex-col lg:flex-row items-center lg:space-x-8">
+		<div class="lg:w-1/2 mb-6 lg:mb-0">
+		  <img 
+			src="/index3.webp" 
+			alt="Bandes-annonces" 
+			class="rounded-md w-full"
+		  />
+		</div>
+		<div class="lg:w-1/2 space-y-4">
+		  <p>
+			Plongez dans l’univers de l’animation japonaise avec une sélection de trailers et
+			d’extraits inédits.
+		  </p>
+		  <p>
+			Préparez-vous à découvrir les nouveautés de l’année et à retrouver vos franchises
+			préférées sur grand écran !
+		  </p>
+		</div>
+	  </div>
+	</div>
+  </section>
+  
+  <!-- BILLETTERIE -->
+  <section id="billetterie" class="py-12 bg-[#77B5FE] text-[#FFD700]">
+	<div class="container mx-auto px-4">
+	  <h2 class="text-2xl lg:text-4xl font-bold text-center mb-8">Billetterie</h2>
+	  <div class="flex flex-col lg:flex-row items-center lg:space-x-8">
+		<div class="lg:w-1/2 mb-6 lg:mb-0 order-2 lg:order-1">
+		  <p class="mb-4">
+			Réservez vos billets en ligne et profitez de tarifs préférentiels !  
+			Pass 1 jour, 2 jours, ou accès complet au festival, à vous de choisir !
+		  </p>
+		  <div class="flex justify-center">
+			<a 
+				href="/reserver" 
+				class="bg-[#FF69B4] text-white px-6 py-3 rounded-md shadow-md hover:bg-pink-500 transition-colors font-semibold inline-block"
+			>
+				Réserver maintenant
+			</a>
+		  </div>
+		</div>
+		<div class="lg:w-1/2 order-1 lg:order-2">
+		  <img 
+			src="/index4.webp" 
+			alt="Billetterie" 
+			class="rounded-md w-full"
+		  />
+		</div>
+	  </div>
+	</div>
+  </section>
+  
+  <!-- CONTACT -->
+  <section id="contact" class="py-12 bg-white text-[#333]">
+	<div class="container mx-auto px-4">
+	  <h2 class="text-2xl lg:text-4xl font-bold text-center mb-8">Contact</h2>
+	  <div class="flex flex-col lg:flex-row items-center lg:space-x-8">
+		<div class="lg:w-1/2 mb-6 lg:mb-0">
+		  <img 
+			src="/index5.webp" 
+			alt="Contact" 
+			class="rounded-md w-full"
+		  />
+		</div>
+		<div class="lg:w-1/2 space-y-4">
+		  <p>
+			Une question ? Besoin d’informations complémentaires ? N’hésitez pas à nous
+			contacter via notre formulaire ou par e-mail.
+		  </p>
+		  <p>
+			Nous sommes à votre disposition pour vous aider à préparer au mieux votre
+			expérience au Festival CinéMatsuri.
+		  </p>
 
+		<div class="flex justify-center">
+			<a 
+				href="/contact" 
+				class="inline-block bg-[#FF69B4] text-white px-6 py-3 rounded-md shadow-md hover:bg-pink-500 transition-colors font-semibold"
+			>
+				Nous contacter
+			</a>
+		</div>
+		</div>
+	  </div>
+	</div>
+  </section>
+</Layout>
