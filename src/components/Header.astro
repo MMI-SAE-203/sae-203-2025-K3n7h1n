@@ -1,0 +1,42 @@
+---
+// src/components/Header.astro
+---
+<header class="bg-[#77B5FE] text-[#FFD700]">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="text-2xl font-bold">
+        Festival CineMatsuri
+      </div>
+      <!-- Navigation Desktop (affichée dès lg) -->
+      <nav class="hidden lg:flex space-x-8">
+        <a href="/" class="hover:text-[#FF69B4] transition-colors">Accueil</a>
+        <a href="/catalog" class="hover:text-[#FF69B4] transition-colors">Catalogue</a>
+        <a href="/events" class="hover:text-[#FF69B4] transition-colors">Evenements</a>
+        <a href="/contact" class="hover:text-[#FF69B4] transition-colors">Contact</a>
+      </nav>
+      <!-- Bouton pour menu mobile (visible en dessous de lg) -->
+      <button id="menu-button" class="lg:hidden focus:outline-none" aria-label="Ouvrir le menu">
+        <svg class="w-6 h-6 hover:text-[#FF69B4] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <!-- Navigation Mobile -->
+    <nav id="mobile-menu" class="lg:hidden hidden">
+      <div class="container mx-auto px-4 py-4 flex flex-col space-y-2">
+        <a href="/" class="hover:text-[#FF69B4] transition-colors">Accueil</a>
+        <a href="/catalog" class="hover:text-[#FF69B4] transition-colors">Catalogue</a>
+        <a href="/events" class="hover:text-[#FF69B4] transition-colors">Événements</a>
+        <a href="/contact" class="hover:text-[#FF69B4] transition-colors">Contact</a>
+      </div>
+    </nav>
+    <!-- Script pour basculer le menu mobile -->
+    <script>
+      const menuButton = document.getElementById('menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    </script>
+  </header>
+  
