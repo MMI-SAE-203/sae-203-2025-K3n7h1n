@@ -7,32 +7,56 @@ export async function films() {
 }
 
 export async function filmsOrder() {
-    const films = await pb.collection('Films').getFullList({sort: 'Date'});
+    let films = await pb.collection('Films').getFullList({sort: 'Date'});
+    films = films.map(film => {
+      film.imgUrl = pb.files.getURL(film, film.image);
+      film.Date = formatDate(film.Date);
+      return film;
+    }
+    );
     return films;
 }
 
 export async function ActOrder() {
-    const films = await pb.collection('Activites').getFullList({sort: 'Date'});
+    let films = await pb.collection('Activites').getFullList({sort: 'Date', expand: 'animateurs'});
+    films = films.map(film => {
+      film.imgUrl = pb.files.getURL(film, film.image);
+      film.Date = formatDate(film.Date);
+
+      return film;
+    }
+    );
     return films;
 }
 
 export async function NameOrder() {
-    const films = await pb.collection('Invite').getFullList({sort: 'Nom'});
-    return films;
+    let name = await pb.collection('Invite').getFullList({sort: 'Nom'});
+    name = name.map(film => {
+      film.imgUrl = pb.files.getURL(film, film.image);
+      return film;
+    }
+    );
+    return name;
 }
 
 export async function oneID(id) {
-    const records = await pb.collection("Films").getOne(id) ;
-    return records ;
-    }
+  let records = await pb.collection("Films").getOne(id) ;
+  records.imgUrl = pb.files.getURL(records
+    , records.image);
+  return records ;
+}
 
     export async function oneIDName(id) {
-        const records = await pb.collection("Invite").getOne(id) ;
+        let records = await pb.collection("Invite").getOne(id) ;
+        records.imgUrl = pb.files.getURL(records
+          , records.image);
         return records ;
         }
 
         export async function oneIDAct(id) {
-            const records = await pb.collection("Activites").getOne(id) ;
+            let records = await pb.collection("Activites").getOne(id) ;
+            records.imgUrl = pb.files.getURL(records
+              , records.image);
             return records ;
             }
 
@@ -54,6 +78,13 @@ export async function oneID(id) {
                   const newGuest = await pb.collection('Invite').create();
                   return newGuest;
                 }
+
+       export function formatDate (date) {
+           // Formater la date en français
+           const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+           const DateString = new Date(date).toLocaleDateString('fr-FR', options);
+           return DateString;
+       }         
               
 
               

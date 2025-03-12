@@ -1,0 +1,22 @@
+---
+// src/components/GuestCard.astro
+import { Picture } from 'astro:assets';
+const { ...guest } = Astro.props;
+---
+
+<div class="bg-gray-50 border border-gray-200 shadow-md rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-xl">
+  <img class="w-full h-auto object-cover" src={guest.imgUrl} alt={guest.Nom} />
+  <div class="p-4">
+    <h2 class="text-xl font-bold text-gray-800 mb-2">{guest.Nom}</h2>
+    <div class="text-sm text-gray-600 space-y-1">
+      <p><strong>Rôle :</strong> {guest.Role}</p>
+      <p><strong>Description :</strong> {guest.bio}</p>
+      <a 
+        href={`catalogue/${guest.id}`} 
+        class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition transform hover:scale-105"
+      >
+        Plus d'info
+      </a>
+    </div>
+  </div>
+</div>

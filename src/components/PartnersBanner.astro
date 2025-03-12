@@ -1,0 +1,47 @@
+---
+// PartnersBanner.astro
+---
+<style>
+    .marquee-container {
+      overflow: hidden;
+      background-color: #77B5FE;
+    }
+    .marquee {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 15s linear infinite;
+    }
+    .marquee:hover {
+      animation-play-state: paused;
+    }
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+  </style>
+  
+  <div class="marquee-container py-4">
+    <h2 class="text-center text-xl font-bold mb-4">Partenaire</h2>
+    <div class="marquee">
+      <!-- Première série des partenaires -->
+      <div class="flex items-center space-x-8 md:space-x-12 lg:space-x-20">
+        <img src="/src/assets/partenaire1.jpg" alt="Partenaire 1" class="h-12 md:h-16 lg:h-20">
+        <img src="/src/assets/partenaire2.png" alt="Partenaire 2" class="h-12 md:h-16 lg:h-20">
+        <img src="/src/assets/partenaire3.webp" alt="Partenaire 3" class="h-12 md:h-16 lg:h-20">
+        <img src="/src/assets/partenaire4.jpg" alt="Partenaire 4" class="h-12 md:h-16 lg:h-20">
+      </div>
+     
+      <!-- Duplication pour un défilement en boucle fluide -->
+      <div class="flex items-center space-x-8 md:space-x-12 lg:space-x-20">
+        <img src="/src/assets/partenaire1.jpg" alt="Partenaire 1" class="h-12 md:h-16 lg:h-20">
+        <img src="/src/assets/partenaire2.png" alt="Partenaire 2" class="h-12 md:h-16 lg:h-20">
+        <img src="/src/assets/partenaire3.webp" alt="Partenaire 3" class="h-12 md:h-16 lg:h-20">
+        <img src="/src/assets/partenaire4.jpg" alt="Partenaire 4" class="h-12 md:h-16 lg:h-20">
+      </div>
+    </div>
+  </div>
+  

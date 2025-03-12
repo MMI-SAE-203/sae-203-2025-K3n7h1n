@@ -1,0 +1,42 @@
+---
+import { oneID } from '../../../../backend.mjs';
+import Layout from '../../../layouts/Layout.astro';
+const { id } = Astro.params;
+const film = await oneID(id);
+console.log(film);
+
+if (!film) {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title={film.Nom} class="font-mono">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <h1 class="text-3xl font-bold text-center mb-8">{film.Nom}</h1>
+      <!-- Conteneur centré -->
+      <div class="flex justify-center">
+        <div class="w-full max-w-md bg-gray-50 border border-gray-200 shadow-md rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-xl">
+          <img class="w-full h-64 object-cover" src={film.imgUrl} alt={film.Nom} />
+          <div class="p-4">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">{film.Nom}</h2>
+            <p class="text-gray-700 mb-4">{film.Description}</p>
+            <div class="text-sm text-gray-600 space-y-1">
+              <p><strong>Type :</strong> {film.Type}</p>
+              <p>
+                <strong>Bande Annonce :</strong>
+                <a
+                  href={film.BandeA}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-blue-500 hover:underline"
+                >
+                  Voir la vidéo
+                </a>
+              </p>
+              <p><strong>Date :</strong> {film.Date}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Layout>
