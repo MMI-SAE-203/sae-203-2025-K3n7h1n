@@ -9,7 +9,7 @@ const { ...guest } = Astro.props;
   <div class="p-4">
     <h2 class="text-xl font-bold text-gray-800 mb-2">{guest.Nom}</h2>
     <div class="text-sm text-gray-600 space-y-1">
-      <p><strong>Rôle :</strong> {guest.Role}</p>
+      
       <p><strong>Description :</strong> {guest.bio}</p>
       <a 
         href={`catalogue/${guest.id}`} 

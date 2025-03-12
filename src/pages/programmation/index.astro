@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import EventCard from "../../components/EventCard.astro";
+import GuestCard from "../../components/GuestCard.astro";
+
+import { mixOrders } from "../../../backend.mjs";
+import { NameOrder } from "../../../backend.mjs";
+
+// Récupération des événements regroupés (films et activités)
+const events = await mixOrders();
+
+// Groupement des événements par jour de la semaine
+const eventsPerDay: { [key: number]: any[] } = {};
+for (const event of events) {
+  event.Date = new Date(event.Date);
+  const day = event.Date.getDay(); // 0: Dimanche, ... 6: Samedi
+  if (!eventsPerDay[day]) {
+    eventsPerDay[day] = [];
+  }
+  eventsPerDay[day].push(event);
+}
+const jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+
+// Récupération des invités (optionnel)
+const guests = await NameOrder();
+---
+<Layout title="Programmation" class="font-mono">
+  <!-- HERO SECTION -->
+  <section class="bg-[#77B5FE] text-[#FFD700] py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
+       Programmation
+      </h1>
+      <p class="text-lg md:text-2xl font-medium mb-8">
+        Retrouvez la programmation complète du Festival CinéMatsuri, regroupant films et activités, organisée par jour de la semaine.
+    </p>
+      <a 
+        href="/billetterie" 
+        class="inline-block bg-[#FF69B4] text-white px-8 py-4 rounded-full shadow-lg hover:bg-pink-500 transition-colors"
+      >
+        Réserver ma place
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTENU PROGRAMMATION -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    {/* Boucle sur chaque jour ayant des événements */}
+    {Object.entries(eventsPerDay).map(([key, value]) => (
+      <section id={`jour-${key}`} class="mb-16" key={key}>
+        <h2 class="text-3xl font-bold text-center mb-8 text-[#FF69B4]">
+          {jours[parseInt(key)]}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {value.map(event => (
+            <EventCard {...event} key={event.id} />
+          ))}
+        </div>
+      </section>
+    ))}
+
+    
+  </div>
+</Layout>

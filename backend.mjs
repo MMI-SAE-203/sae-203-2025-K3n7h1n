@@ -10,7 +10,7 @@ export async function filmsOrder() {
     let films = await pb.collection('Films').getFullList({sort: 'Date'});
     films = films.map(film => {
       film.imgUrl = pb.files.getURL(film, film.image);
-      film.Date = formatDate(film.Date);
+      // film.Date = formatDate(film.Date);
       return film;
     }
     );
@@ -21,7 +21,7 @@ export async function ActOrder() {
     let films = await pb.collection('Activites').getFullList({sort: 'Date', expand: 'animateurs'});
     films = films.map(film => {
       film.imgUrl = pb.files.getURL(film, film.image);
-      film.Date = formatDate(film.Date);
+      // film.Date = formatDate(film.Date);
 
       return film;
     }
@@ -86,5 +86,18 @@ export async function oneID(id) {
            return DateString;
        }         
               
-
+       export async function mixOrders() {
+       
+        const [films, activites] = await Promise.all([filmsOrder(), ActOrder()]);
+      
+       
+        const combined = [...films, ...activites];
+      
+        combined.sort((a, b) => new Date(a.Date) - new Date(b.Date));
+      
+        return combined;
+      }
+      
               
+
+       
