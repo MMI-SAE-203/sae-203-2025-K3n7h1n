@@ -6,12 +6,38 @@ import Layout from '../../layouts/Layout.astro';
 import { filmsOrder } from '../../../backend.mjs';
 import { NameOrder } from '../../../backend.mjs';
 import { ActOrder } from '../../../backend.mjs';
+import { filterByCategory } from '../../../backend.mjs';
 
-const film = await filmsOrder();
 const guest = await NameOrder();
 const activities = await ActOrder();
+
+let events = [];
+// On ajoute "Aucun" dans la liste des catégories
+let categories = ["Tout", "Aucun", "Shonen", "Shojo", "Kodomo"];
+
+// Si la requête est GET, on affiche tous les films
+if (Astro.request.method === "GET") {
+  events = await filmsOrder();
+} 
+// Si c'est une requête POST, on filtre par catégorie
+else if (Astro.request.method === "POST") {
+  const data = await Astro.request.formData();
+  const categorie = data.get("categorie");
+  if (categorie === "Aucun") {
+    // Si "Aucun" est sélectionné, on vide le tableau pour afficher aucun film
+    events = [];
+  } else if (categorie !== "Tout") {
+    const response = await filterByCategory(categorie);
+    events = response.events;
+    // Place la catégorie choisie en première position
+    categories = [categorie, ...categories.filter((c) => c !== categorie)];
+  } else {
+    events = await filmsOrder();
+  }
+}
 ---
 <Layout title="Programmation" class="font-mono">
+  <!-- HERO SECTION -->
   <section class="bg-[#77B5FE] text-[#FFD700] py-16">
     <div class="container mx-auto px-4 text-center">
       <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
@@ -28,11 +54,39 @@ const activities = await ActOrder();
       </a>
     </div>
   </section>
+
+  <!-- INTRODUCTION : LE FESTIVAL (À PROPOS) -->
+  <section class="bg-white py-12">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-5xl font-bold text-center mb-8 text-[#77B5FE] font-amatic">À propos de CinéMatsuri</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div class="p-6 bg-gray-100 rounded-lg shadow">
+          <h3 class="text-xl font-bold text-[#FF69B4] mb-2">Historique</h3>
+          <p class="text-gray-700">
+            Découvrez l'histoire du festival, sa création et ses objectifs. Un projet né de la passion pour l'animation japonaise et l'envie de partager cette culture unique.
+          </p>
+        </div>
+        <div class="p-6 bg-gray-100 rounded-lg shadow">
+          <h3 class="text-xl font-bold text-[#FF69B4] mb-2">Équipe</h3>
+          <p class="text-gray-700">
+            Rencontrez les organisateurs et les équipes techniques qui œuvrent chaque année pour offrir une expérience immersive et inoubliable.
+          </p>
+        </div>
+        <div class="p-6 bg-gray-100 rounded-lg shadow">
+          <h3 class="text-xl font-bold text-[#FF69B4] mb-2">Charte</h3>
+          <p class="text-gray-700">
+            Découvrez les valeurs et la thématique de cette édition, reflet d'une passion partagée pour l'animation et la culture manga.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTENU -->
   <div x-data="{ activeFilter: 'all' }" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="mt-4 p-6 bg-gray-100 rounded-lg shadow-md mb-12">
       <p class="text-gray-700 mb-4">
-        Découvrez un festival unique entièrement dédié aux films d'animation japonais. Situé à Andelnans, près de Belfort, il propose une expérience immersive avec des projections exclusives, des rencontres avec des professionnels, des ateliers pour découvrir les métiers de l'animation et des stands créatifs en lien avec la culture japonaise. Venez explorer l'univers riche et créatif de l'animation japonaise !
+        Découvrez un festival unique entièrement dédié aux films d'animation japonais. Situé à Andelnans, près de Belfort, il propose une expérience immersive avec des projections exclusives, des rencontres avec des professionnels du milieu, des ateliers pour découvrir les métiers de l'animation et des stands créatifs en lien avec la culture japonaise. Venez explorer l'univers riche et créatif de l'animation japonaise !
       </p>
     </div>
     
@@ -66,10 +120,36 @@ const activities = await ActOrder();
       >
         Invités
       </button>
+      
     </div>
+     <!-- FORMULAIRE DE FILTRAGE -->
+  <section class="py-12">
+    <form action="/catalogue" method="post" class="flex flex-col items-center mb-8">
+      <label for="categorie" class="mb-2 text-lg font-medium text-gray-700">
+        Filtrer par catégorie :
+      </label>
+      <select name="categorie" class="p-2 border border-gray-300 rounded mb-4">
+        {categories.map((categorie) => (
+          <option value={categorie}>{categorie}</option>
+        ))}
+      </select>
+      <input type="submit" value="Filtrer" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors" />
+    </form>
+  
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {events.length > 0 ? (
+        events.map((event) => (
+          <FilmCard {...event} key={event.id} />
+        ))
+      ) : (
+        <p class="text-center text-gray-600">Aucun film trouvé pour cette catégorie.</p>
+      )}
+    </div>
+  </section>
+
     
     <!-- Section Films -->
-    <section id="films" x-show="activeFilter === 'all' || activeFilter === 'films'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- <section id="films" x-show="activeFilter === 'all' || activeFilter === 'films'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {film.length > 0 ? (
         film.map((film) => (
           <FilmCard {...film} key={film.id} />
@@ -77,7 +157,7 @@ const activities = await ActOrder();
       ) : (
         <p class="text-gray-600 text-center">Aucune programmation film disponible pour le moment.</p>
       )}
-    </section>
+    </section> -->
     
     <!-- Section Activités -->
     <section id="activites" x-show="activeFilter === 'all' || activeFilter === 'activites'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
@@ -102,5 +182,5 @@ const activities = await ActOrder();
     </section>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer> </script>
 </Layout>

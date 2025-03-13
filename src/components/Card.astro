@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 const {...film} = Astro.props;
 
+console.log(film);
 
 ---
 
@@ -25,6 +26,7 @@ const {...film} = Astro.props;
             </a>
           </p>
         <p><strong>Date :</strong> {film.Date}</p>
+        <p><strong>Animateur :</strong> {film.expand.Acteurs.Nom}</p>
         <a href=`catalogue/film/${film.id}`
         class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition transform hover:scale-105">
         Plus d'info</a>

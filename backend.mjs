@@ -7,10 +7,10 @@ export async function films() {
 }
 
 export async function filmsOrder() {
-    let films = await pb.collection('Films').getFullList({sort: 'Date'});
+    let films = await pb.collection('Films').getFullList({sort: 'Date', expand: 'Acteurs'});
     films = films.map(film => {
       film.imgUrl = pb.files.getURL(film, film.image);
-      // film.Date = formatDate(film.Date);
+      //film.Date = formatDate(film.Date);
       return film;
     }
     );
@@ -21,7 +21,7 @@ export async function ActOrder() {
     let films = await pb.collection('Activites').getFullList({sort: 'Date', expand: 'animateurs'});
     films = films.map(film => {
       film.imgUrl = pb.files.getURL(film, film.image);
-      // film.Date = formatDate(film.Date);
+       //film.Date = formatDate(film.Date);
 
       return film;
     }
@@ -74,6 +74,13 @@ export async function oneID(id) {
                 return activities;
               }
 
+              export async function getfilmBytype(Type) {
+                const activities = await pb.collection('Films').getFullList({
+                  filter: `Type = "${Type}"`
+                });
+                return activities;
+              }
+
               export async function saveGuest() {
                   const newGuest = await pb.collection('Invite').create();
                   return newGuest;
@@ -98,6 +105,29 @@ export async function oneID(id) {
         return combined;
       }
       
+      export async function filterByCategory(Type) {
+        try {
+            let events = await pb.collection("Films").getFullList({
+                filter: `Type = "${Type}"`,
+                expand: 'Acteurs'
+            });
+            events = events.map((event) => {
+                event.imgUrl = pb.files.getURL(event, event.image);
+                return event;
+            });
+            return {
+                success: true,
+                events: events,
+                message: "Les événements ont été filtrés avec succès.",
+            }
+        } catch (error) {
+            return {
+                success: false,
+                events: [],
+                message: "Une erreur est survenue lors du filtrage des événements: " + error,
+            }
+        }
+    }
               
 
        
