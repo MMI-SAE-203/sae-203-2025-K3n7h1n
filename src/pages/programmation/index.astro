@@ -24,16 +24,40 @@ const jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "S
 // Récupération des invités (optionnel)
 const guests = await NameOrder();
 ---
+
+<style>
+  /* Animation fadeIn simple */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+  }
+</style>
+
 <Layout title="Programmation" class="font-mono">
-  <!-- HERO SECTION -->
-  <section class="bg-[#77B5FE] text-[#FFD700] py-16">
-    <div class="container mx-auto px-4 text-center">
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
-       Programmation
+  <!-- HERO SECTION avec image de fond et overlay -->
+  <section
+    class="relative bg-cover bg-center py-16"
+    style="background-image: url('/background.webp');"
+  >
+    <!-- Overlay pour assombrir l'image de fond -->
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+
+    <div class="relative container mx-auto px-4 text-center animate-fadeIn">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-[#FFD700]">
+        Programmation
       </h1>
-      <p class="text-lg md:text-2xl font-medium mb-8">
+      <p class="text-lg md:text-2xl font-medium mb-8 text-[#FFD700]">
         Retrouvez la programmation complète du Festival CinéMatsuri, regroupant films et activités, organisée par jour de la semaine.
-    </p>
+      </p>
       <a 
         href="/billetterie" 
         class="inline-block bg-[#FF69B4] text-white px-8 py-4 rounded-full shadow-lg hover:bg-pink-500 transition-colors"
@@ -44,8 +68,7 @@ const guests = await NameOrder();
   </section>
 
   <!-- CONTENU PROGRAMMATION -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     {/* Boucle sur chaque jour ayant des événements */}
     {Object.entries(eventsPerDay).map(([key, value]) => (
       <section id={`jour-${key}`} class="mb-16" key={key}>
@@ -59,7 +82,5 @@ const guests = await NameOrder();
         </div>
       </section>
     ))}
-
-    
   </div>
 </Layout>
