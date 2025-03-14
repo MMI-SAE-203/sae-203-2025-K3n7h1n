@@ -1,17 +1,38 @@
 ---
 import Layout from "../layouts/Layout.astro"
-
 ---
+
+<style>
+  /* Animation fadeIn simple */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+  }
+</style>
+
 <Layout title="Festival CinéMatsuri">
-  <!-- HERO SECTION -->
-  <section class="bg-[#77B5FE] text-[#FFD700] py-16">
+  <!-- HERO SECTION avec image de fond et overlay -->
+  <section
+    class="relative bg-cover bg-center py-16"
+    style="background-image: url('/background.webp');"
+  >
+    <!-- Overlay pour assombrir l'image et faciliter la lecture -->
+    <div class="absolute inset-0 bg-black opacity-40"></div>
     
-    <div class="container mx-auto px-4 flex flex-col items-center text-center space-y-8">
-      
-      <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight font-amatic">
+    <div class="relative container mx-auto px-4 flex flex-col items-center text-center space-y-8 animate-fadeIn">
+      <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight font-amatic text-[#FFD700]">
         Festival CinéMatsuri
       </h1>
-      <p class="text-lg md:text-xl font-medium max-w-2xl">
+      <p class="text-lg md:text-xl font-medium max-w-2xl text-[#FFD700]">
         Le festival incontournable pour tous les fans d'anime et de manga !
       </p>
       
